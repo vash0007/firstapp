@@ -13,6 +13,7 @@ let imageUrlKey = "";
 let imageSizeKey = "";
 let select = "";
 let selectKey = "";
+let pages = [];
 
 document.addEventListener("DOMContentLoaded", init);
 
@@ -29,6 +30,13 @@ function init() {
         .querySelector(".cancelButton")
         .addEventListener("click", hideOverlay);
     document.querySelector(".overlay").addEventListener("click", hideOverlay);
+    document.querySelector(".backButtonDiv").addEventListener("click",goToHome);
+
+    document.querySelector("#search-input").addEventListener("keyup",function(eve){
+        if(eve.keyCode == 13){
+            startSearch();
+        }
+    });
 
     document.querySelector(".saveButton").addEventListener("click", function (e) {
         let cheeseList = document.getElementsByName("modalValue");
@@ -78,8 +86,8 @@ function getLocalStorageData() {
         imgurl = localStorage.getItem(imgurl);
         imageSizes = localStorage.getItem(imageSizes);
 
-        console.log("Saved URL: " + imgurl);
-        console.log("Saved ImagesSizes: " + imageSizes);
+        console.log(imgurl);
+        console.log(imageSizes);
 
         let seconds = calculateElapsedTime(savedDate);
         if (seconds > DataTimeOut) {
@@ -125,13 +133,13 @@ function getPosterSizeAndURL() {
 }
 
 function getSearchResult() {
-    let url = `https://api.themoviedb.org/3/search/movie?api_key=${APIKEY}&query=${searchString}`;
+    let url = `${movieDataBaseURL}search/movie?api_key=${APIKEY}&query=${searchString}`;
     fetch(url)
         .then(response => response.json())
         .then((data) => {
             console.log(data);
 
-            createPage(data);
+            createPage(data,'s');
 
         })
         .catch(function (error) {
@@ -226,12 +234,12 @@ function getRecommedation() {
     let movieID = this.getAttribute("data-id");
     console.log("you clicked: " + movieTitle + "" + movieID);
 
-    let url = `https://api.themoviedb.org/3/movie/${movieID}/recommendations?api_key=${APIKEY}`;
+    let url = `${movieDataBaseURL}movie/${movieID}/recommendations?api_key=${APIKEY}`;
     fetch(url)
         .then(response => response.json())
         .then((data) => {
             console.log(data);
-            createPage(data);
+            createPage(data,'r');
         })
         .catch((error) => console.log(error));
 }
@@ -252,16 +260,23 @@ function showModal(e) {
     modal.classList.add("on");
     select = localStorage.getItem(selectKey);
     alert(select);
-    if (select) {
-        if (select == "movie") {
-            document.getElementById("tv").checked = true;
-            document.getElementById("movie").checked = false;
-        } else if (select == "tv") {
-            document.getElementById("tv").checked = false;
-            document.getElementById("movie").checked = true;
-        } else {
-            document.getElementById("tv").checked = false;
-            document.getElementById("movie").checked = false;
+}
+
+function goToHome() {
+    //let activeWindow = document.querySelector("");
+    pages = document.querySelectorAll(".page");
+    for (let i = 0; i < pages.length; i++) {
+        if (pages[i].classList.contains("active")) {
+            let pageId = pages[i].id;
+            let activePage = document.getElementById(pageId);
+            //alert(pageId);
+            activePage.classList.remove("active");
+            if (pageId == "recommend-results") {
+                document.querySelector("#search-results").classList.add("active");
+            } else if (pageId == "search-results") {
+                document.querySelector("#search-results").classList.remove("active");
+                document.getElementById("search-input").value = "";
+            }
         }
     }
 }
