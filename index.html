@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Movie Recommendations</title>
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="css/main.css" />
+</head>
+
+<body>
+    <main>
+        <header>
+            <h1>Recommandation Page</h1>
+            
+           
+        </header>
+        <aside>
+             <div class="backButtonDiv">
+                <img id="back-button" alt="Back Button" title="Back" data-src="img/arrow-thick-left-fill-large-lg.svg" class="iconic iconic-md"/>
+            </div>
+            <input type="text" id="search-input" placeholder="search" />
+<div class="searchButtonDiv">
+                <img id="search-button" alt="Search" title="Search" data-src="img/magnifying-glass.svg" class="iconic iconic-md">
+            </div>
+
+            <div class="modleButtonDiv" id="modleButtonDiv">
+                <img id="modlebutton" alt="Search" title="modle" data-src="img/list-rich-md.svg" class="iconic iconic-md">
+            </div>
+            
+            
+        </aside>
+
+        <div class="page active"  id="search-results">
+            <section class="title"></section>
+            <section class="content flex-container"></section>
+        </div>
+
+        <div class="page" id="recommend-results">
+            <section class="title"></section>
+            <section class="content flex-container"></section>
+        </div>
+    </main>
+    <div class="overlay hide">&nbsp;</div>
+
+    <div class="modal off">
+        <div class="modal-header">
+            <h2>Preferences</h2>
+        </div>
+        <div class="modal-radio">
+            <input type="radio" name="modalValue" value="Movie" id="movie" />
+            <label for="blue">Movie</label>
+
+            <input type="radio" name="modalValue" value="Tv" id="tv" />
+            <label for="cheddar">Tv</label>
+        </div>
+        <button class="cancelButton">Cancel</button>
+        <button class="saveButton">Save</button>
+
+    </div>
+
+
+    <div class="attribution">
+
+    </div>
+
+    <script src="js/iconic.min.js"></script>
+    <script src="js/key.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
